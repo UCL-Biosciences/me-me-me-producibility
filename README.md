@@ -1,4 +1,4 @@
-# Reproducibility Crisis — Interactive Field Guide
+# Overwhelmed by big data? Time to make reproducibility work for you!
 
 An interactive comic-book-style explainer about reproducibility in computational biology research. Built for PhD students, postdocs, and PIs.
 
