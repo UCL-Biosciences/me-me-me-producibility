@@ -2,7 +2,7 @@
 
 An interactive comic-book-style explainer about reproducibility in computational biology research. Built for PhD students, postdocs, and PIs.
 
-**Live site:** [ucl-biosciences.github.io/me-me-me-producibility](https://ucl-biosciences.github.io/me-me-me-producibility)
+**Live site:** [UCL-Biosciences.github.io/me-me-me-producibility](https://UCL-Biosciences.github.io/me-me-me-producibility)
 
 ---
 
