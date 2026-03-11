@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REPRODUCIBILITY CRISIS — A Computational Biology Comic</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --yellow: #FFE000;
+    --red: #E8001C;
+    --black: #0A0A0A;
+    --white: #FFFBF0;
+    --blue: #003BCC;
+    --outline: 3px solid var(--black);
+    --outline-thick: 4px solid var(--black);
+    --shadow: 5px 5px 0px var(--black);
+    --shadow-big: 8px 8px 0px var(--black);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--white);
+    background-image: radial-gradient(circle, #c8c0a0 1px, transparent 1px);
+    background-size: 18px 18px;
+    font-family: 'Comic Neue', cursive;
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--yellow);
+    border-bottom: var(--outline-thick);
+    padding: 20px 40px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 0 var(--black);
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .title-block { position: relative; display: inline-block; }
+
+  h1 {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: 3px;
+    line-height: 1;
+    color: var(--black);
+    text-shadow: 4px 4px 0 var(--red);
+  }
+
+  .subtitle {
+    font-family: 'Comic Neue', cursive;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--black);
+    margin-top: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header-burst {
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Bangers', cursive;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border: var(--outline);
+    box-shadow: var(--shadow);
+    transform: rotate(-2deg);
+    white-space: nowrap;
+  }
+
+  .header-hint {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--black);
+    background: var(--white);
+    border: var(--outline);
+    padding: 6px 12px;
+    box-shadow: var(--shadow);
+    margin-left: auto;
+    letter-spacing: 0.5px;
+  }
+
+  #back-btn {
+    display: none;
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    background: var(--black);
+    color: var(--yellow);
+    border: 3px solid var(--yellow);
+    padding: 6px 16px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 var(--yellow);
+    margin-left: auto;
+    transition: transform 0.1s;
+    white-space: nowrap;
+  }
+  #back-btn:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--yellow); }
+  body.focus-mode #back-btn { display: block; }
+  body.focus-mode .header-hint { display: none; }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .legend-dot { width: 12px; height: 12px; border: 2px solid var(--black); }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  body:not(.focus-mode) .columns {
+    grid-template-columns: 1fr;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  body:not(.focus-mode) #col-solutions,
+  body:not(.focus-mode) #col-benefits {
+    display: none;
+  }
+
+  #col-solutions, #col-benefits {
+    animation: slideIn 0.35s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── COLUMN ── */
+  .column {
+    padding: 0 12px;
+    position: relative;
+  }
+  .column:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--black);
+  }
+
+  .col-header {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    letter-spacing: 4px;
+    text-align: center;
+    padding: 16px 12px 20px;
+    margin-bottom: 8px;
+  }
+  .col-header-problems { color: var(--red);    text-shadow: 3px 3px 0 var(--black); }
+  .col-header-solutions { color: var(--blue);  text-shadow: 3px 3px 0 var(--black); }
+  .col-header-benefits  { color: #007A3D;      text-shadow: 3px 3px 0 var(--black); }
+  .col-header::after {
+    content: '';
+    display: block;
+    height: 3px;
+    background: var(--black);
+    margin-top: 10px;
+  }
+  .col-count {
+    font-family: 'Comic Neue', cursive;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: none;
+    color: var(--black);
+    display: block;
+    margin-top: 4px;
+    opacity: 0.6;
+  }
+  .col-header-wrap { position: relative; overflow: hidden; }
+  .col-header-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.07) 1.5px, transparent 1.5px);
+    background-size: 8px 8px;
+    pointer-events: none;
+  }
+
+  /* ── PROBLEMS GRID (home screen) ── */
+  body:not(.focus-mode) .cards-problems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 0 4px;
+  }
+  body.focus-mode .cards-problems-grid { display: block; }
+
+  body:not(.focus-mode) .cards-problems-grid .card-problem {
+    margin-bottom: 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 20px 18px;
+  }
+  body:not(.focus-mode) .cards-problems-grid .card-problem .card-title {
+    font-size: 1.45rem;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  body:not(.focus-mode) .cards-problems-grid .card-problem .card-id { font-size: 1.05rem; }
+  body:not(.focus-mode) .cards-problems-grid .card-problem .card-body {
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: #444;
+    flex: 1;
+    margin-top: 6px;
+  }
+  body:not(.focus-mode) .cards-problems-grid .card-problem:hover .card-body::after {
+    content: '→ click to explore';
+    display: block;
+    margin-top: 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--red);
+    font-family: 'Bangers', cursive;
+    letter-spacing: 1px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    border: var(--outline-thick);
+    background: var(--white);
+    box-shadow: var(--shadow-big);
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.25s ease, background-color 0.2s ease;
+    user-select: none;
+  }
+  .card:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0px var(--black); }
+  .card:active { transform: translate(2px, 2px); box-shadow: 3px 3px 0px var(--black); }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 6px 6px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover::after { opacity: 1; }
+
+  .card-id-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .card-id {
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border: 2px solid var(--black);
+    display: inline-block;
+  }
+  .card-title {
+    font-family: 'Comic Neue', cursive;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+  .card-body {
+    font-size: 1rem;
+    line-height: 1.45;
+    color: #333;
+  }
+
+  .card-group {
+    font-family: 'Bangers', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    opacity: 0.7;
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  body.focus-mode .card-group { font-size: 0.75rem; opacity: 0.5; }
+
+  .card-links-indicator {
+    position: absolute;
+    top: 10px; right: 12px;
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+    max-width: 60px;
+    justify-content: flex-end;
+  }
+  .link-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid var(--black);
+  }
+
+  /* ── TYPE COLOURS ── */
+  .card-problem .card-id  { background: var(--red);  color: var(--white); }
+  .card-problem           { border-left: 7px solid var(--red); }
+  .card-solution .card-id { background: var(--blue); color: var(--white); }
+  .card-solution          { border-left: 7px solid var(--blue); }
+  .card-benefit .card-id  { background: #007A3D;     color: var(--white); }
+  .card-benefit           { border-left: 7px solid #007A3D; }
+
+  /* ── STATES ── */
+  .card.is-active.card-problem  { background: #FFE8E8; border-color: var(--red);   box-shadow: 8px 8px 0px var(--red);   transform: translate(-2px,-2px); }
+  .card.is-active.card-solution { background: #E0E8FF; border-color: var(--blue);  box-shadow: 8px 8px 0px var(--blue);  transform: translate(-2px,-2px); }
+  .card.is-active.card-benefit  { background: #E0FFE8; border-color: #007A3D;      box-shadow: 8px 8px 0px #007A3D;      transform: translate(-2px,-2px); }
+
+  .card.is-linked.card-problem  { background: #FFF0F0; border-color: var(--red);   box-shadow: 6px 6px 0px rgba(232,0,28,0.5);   transform: translate(-1px,-1px); }
+  .card.is-linked.card-solution { background: #EEF2FF; border-color: var(--blue);  box-shadow: 6px 6px 0px rgba(0,59,204,0.4);   transform: translate(-1px,-1px); }
+  .card.is-linked.card-benefit  { background: #EDFFF3; border-color: #007A3D;      box-shadow: 6px 6px 0px rgba(0,122,61,0.4);   transform: translate(-1px,-1px); }
+
+  .card.is-faded { opacity: 0.3; transform: none; box-shadow: 3px 3px 0px var(--black); }
+
+  .card.is-active::before {
+    content: '★';
+    position: absolute;
+    top: -10px; left: -10px;
+    background: var(--yellow);
+    border: 2px solid var(--black);
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    font-size: 11px;
+    line-height: 22px;
+    text-align: center;
+    animation: popIn 0.2s ease;
+  }
+  @keyframes popIn {
+    0%   { transform: scale(0); }
+    70%  { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  body.focus-mode .card-problem:not(.is-active) { opacity: 0.55; }
+  body.focus-mode .card-problem:not(.is-active):hover { opacity: 1; background: #fff5f5; }
+  body.focus-mode .card-problem.is-active::after {
+    content: '↩ click to go back';
+    position: absolute;
+    bottom: 8px; right: 12px;
+    font-size: 0.65rem;
+    font-family: 'Comic Neue', cursive;
+    font-weight: 700;
+    opacity: 0.4;
+    background: none;
+    pointer-events: none;
+  }
+
+  /* ── RESOURCE TAGS ── */
+  .card-resource { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .res-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border: 1.5px solid var(--black);
+    background: var(--yellow);
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    color: var(--black);
+    transition: background 0.15s;
+  }
+  .res-tag:hover { background: #ffd000; }
+
+  /* ── STATUS BAR ── */
+  .status-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    padding: 8px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    z-index: 200;
+    border-top: 3px solid var(--yellow);
+  }
+  .status-text { flex: 1; font-size: 0.9rem; }
+  .status-clear {
+    background: var(--red);
+    color: var(--white);
+    border: 2px solid var(--yellow);
+    font-family: 'Bangers', cursive;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    padding: 4px 14px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    display: none;
+  }
+  body.focus-mode .status-clear { display: block; }
+  .status-clear:hover { transform: scale(1.05); }
+
+  /* ── LOADING STATE ── */
+  .loading {
+    text-align: center;
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--red);
+    padding: 80px 20px;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="title-block">
+      <h1>REPRODUCIBILITY CRISIS!</h1>
+      <span class="subtitle">A field guide for computational biologists who want their work to matter</span>
+    </div>
+    <div class="header-burst">⚡ SCIENCE IN PERIL ⚡</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#FFE8E8;border-color:#E8001C"></div> Problem</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E0E8FF;border-color:#003BCC"></div> Solution</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E0FFE8;border-color:#007A3D"></div> Benefit</div>
+    </div>
+    <div class="header-hint">👆 Click a problem to explore its connections</div>
+    <button id="back-btn" onclick="goBack()">← BACK TO PROBLEMS</button>
+  </div>
+</header>
+
+<main>
+  <div class="columns">
+    <div class="column" id="col-problems">
+      <div class="col-header-wrap">
+        <div class="col-header col-header-problems">
+          PROBLEMS
+          <span class="col-count" id="problems-count"></span>
+        </div>
+      </div>
+      <div id="cards-problems" class="cards-problems-grid">
+        <div class="loading">LOADING...</div>
+      </div>
+    </div>
+
+    <div class="column" id="col-solutions">
+      <div class="col-header-wrap">
+        <div class="col-header col-header-solutions">
+          SOLUTIONS
+          <span class="col-count" id="solutions-count"></span>
+        </div>
+      </div>
+      <div id="cards-solutions"></div>
+    </div>
+
+    <div class="column" id="col-benefits">
+      <div class="col-header-wrap">
+        <div class="col-header col-header-benefits">
+          BENEFITS
+          <span class="col-count" id="benefits-count"></span>
+        </div>
+      </div>
+      <div id="cards-benefits"></div>
+    </div>
+  </div>
+</main>
+
+<div class="status-bar">
+  <span class="status-text" id="status-text">Pick a problem. See what solves it — and what you gain.</span>
+  <button class="status-clear" id="clear-btn" onclick="goBack()">← BACK</button>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let problems = [], solutions = [], benefits = [], linkMap = {};
+let solToProblems = {}, benToProblems = {}, solToBenefits = {};
+let activeProblemId = null;
+
+// ─── LOAD DATA ───────────────────────────────────────────────────────────────
+async function loadData() {
+  const res = await fetch('data.json');
+  const data = await res.json();
+
+  problems  = data.problems;
+  solutions = data.solutions;
+  benefits  = data.benefits;
+  linkMap   = data.links;
+
+  // Build reverse lookup maps
+  solutions.forEach(s => { solToProblems[s.id] = []; solToBenefits[s.id] = new Set(); });
+  benefits.forEach(b  => { benToProblems[b.id] = []; });
+
+  Object.entries(linkMap).forEach(([pid, { solutions: sols, benefits: bens }]) => {
+    sols.forEach(sid => { solToProblems[sid].push(pid); bens.forEach(bid => solToBenefits[sid].add(bid)); });
+    bens.forEach(bid => benToProblems[bid].push(pid));
+  });
+
+  // Update column subtitles
+  document.getElementById('problems-count').textContent  = `${problems.length} ways it all goes wrong`;
+  document.getElementById('solutions-count').textContent = `${solutions.length} things that actually help`;
+  document.getElementById('benefits-count').textContent  = `${benefits.length} reasons to bother`;
+
+  renderAll();
+  updateDisplay();
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function countLinks(id, type) {
+  if (type === 'problem')  return (linkMap[id]?.solutions.length || 0) + (linkMap[id]?.benefits.length || 0);
+  if (type === 'solution') return (solToProblems[id]?.length || 0) + (solToBenefits[id]?.size || 0);
+  if (type === 'benefit')  return benToProblems[id]?.length || 0;
+  return 0;
+}
+
+function renderCard(data, type) {
+  const card = document.createElement('div');
+  card.className = `card card-${type}`;
+  card.dataset.id   = data.id;
+  card.dataset.type = type;
+
+  const colour = type === 'problem' ? '#E8001C' : type === 'solution' ? '#003BCC' : '#007A3D';
+  const n = countLinks(data.id, type);
+  const dots = Array.from({ length: Math.min(n, 8) }, () =>
+    `<div class="link-dot" style="background:${colour}"></div>`).join('');
+
+  const resourcesHTML = data.resources?.length
+    ? `<div class="card-resource">${data.resources.map(r => `<a href="#" class="res-tag">${r}</a>`).join('')}</div>`
+    : '';
+
+  card.innerHTML = `
+    <div class="card-links-indicator">${dots}</div>
+    <div class="card-id-row">
+      <span class="card-id">${data.id}</span>
+      ${data.group ? `<span class="card-group">${data.group}</span>` : ''}
+    </div>
+    <div class="card-title">${data.label}</div>
+    <div class="card-body">${data.body}</div>
+    ${resourcesHTML}
+  `;
+
+  card.addEventListener('click', e => {
+    if (e.target.tagName === 'A') return;
+    if (type === 'problem') toggleProblem(data.id);
+  });
+
+  return card;
+}
+
+function renderAll() {
+  const pCont = document.getElementById('cards-problems');
+  const sCont = document.getElementById('cards-solutions');
+  const bCont = document.getElementById('cards-benefits');
+
+  pCont.innerHTML = '';
+  problems.forEach(p  => pCont.appendChild(renderCard(p, 'problem')));
+  solutions.forEach(s => sCont.appendChild(renderCard(s, 'solution')));
+  benefits.forEach(b  => bCont.appendChild(renderCard(b, 'benefit')));
+}
+
+// ─── INTERACTION ─────────────────────────────────────────────────────────────
+function toggleProblem(id) {
+  if (activeProblemId === id) { goBack(); return; }
+  activeProblemId = id;
+  document.body.classList.add('focus-mode');
+  updateDisplay();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  activeProblemId = null;
+  document.body.classList.remove('focus-mode');
+  updateDisplay();
+}
+
+function updateDisplay() {
+  const linkedSols = activeProblemId ? new Set(linkMap[activeProblemId]?.solutions || []) : new Set();
+  const linkedBens = activeProblemId ? new Set(linkMap[activeProblemId]?.benefits  || []) : new Set();
+
+  document.querySelectorAll('.card-problem').forEach(card => {
+    card.classList.toggle('is-active', card.dataset.id === activeProblemId);
+    card.classList.remove('is-linked', 'is-faded');
+  });
+
+  document.querySelectorAll('.card-solution').forEach(card => {
+    const linked = linkedSols.has(card.dataset.id);
+    card.classList.toggle('is-linked', linked);
+    card.classList.remove('is-active', 'is-faded');
+    card.style.display = activeProblemId ? (linked ? '' : 'none') : '';
+  });
+
+  document.querySelectorAll('.card-benefit').forEach(card => {
+    const linked = linkedBens.has(card.dataset.id);
+    card.classList.toggle('is-linked', linked);
+    card.classList.remove('is-active', 'is-faded');
+    card.style.display = activeProblemId ? (linked ? '' : 'none') : '';
+  });
+
+  const statusEl = document.getElementById('status-text');
+  if (!activeProblemId) {
+    statusEl.textContent = 'Pick a problem. See what solves it — and what you gain.';
+  } else {
+    const p = problems.find(x => x.id === activeProblemId);
+    statusEl.textContent = `${activeProblemId}: "${p.label}" → ${linkedSols.size} solution${linkedSols.size !== 1 ? 's' : ''}, ${linkedBens.size} benefit${linkedBens.size !== 1 ? 's' : ''}`;
+  }
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+loadData().catch(err => {
+  document.getElementById('cards-problems').innerHTML =
+    `<div class="loading" style="color:#E8001C">⚠ Could not load data.json<br><small style="font-size:1rem">${err.message}</small></div>`;
+});
+</script>
+</body>
+</html>

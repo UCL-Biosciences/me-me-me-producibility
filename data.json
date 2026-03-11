@@ -1,0 +1,162 @@
+{
+  "problems": [
+    {
+      "id": "P1",
+      "group": "People & Handover",
+      "label": "The Postdoc Vanishing Act",
+      "body": "Key postdoc left the lab. Pipeline gone with them. Nobody knows how the figures were made."
+    },
+    {
+      "id": "P2",
+      "group": "Data Storage",
+      "label": "Hard Drive of Doom",
+      "body": "Three years of data. One dead hard drive. No backups. A moment of silence."
+    },
+    {
+      "id": "P3",
+      "group": "Environments",
+      "label": "Package Update Chaos",
+      "body": "Updated R/Python. Everything broke. The analysis that ran fine last week now crashes with 47 errors."
+    },
+    {
+      "id": "P4",
+      "group": "Peer Review",
+      "label": "Reviewer Wants Reanalysis",
+      "body": "\"Please repeat the analysis excluding outliers.\" ...which analysis? Which parameters? What year was this?"
+    },
+    {
+      "id": "P5",
+      "group": "Documentation",
+      "label": "The Undocumented Inheritance",
+      "body": "Inherited a pile of scripts from a previous student. No comments. No README. Variable names: df2, df2b, df2b_final_FINAL."
+    },
+    {
+      "id": "P6",
+      "group": "Documentation",
+      "label": "Six-Month Amnesia",
+      "body": "Opened your own analysis notebook from six months ago. May as well be ancient Sanskrit."
+    },
+    {
+      "id": "P7",
+      "group": "Collaboration",
+      "label": "Collaborator Can't Run It",
+      "body": "Sent your pipeline to a collaborator. Works on your machine. Spectacularly fails on theirs."
+    },
+    {
+      "id": "P8",
+      "group": "Provenance",
+      "label": "Figure Doesn't Match Paper",
+      "body": "Revision round 3. The figure in the draft doesn't match what the methods say. Which is right?"
+    },
+    {
+      "id": "P9",
+      "group": "Code Quality",
+      "label": "The Bug Time Bomb",
+      "body": "Found a bug in the analysis script. How many results are affected? How far back does this go? No idea."
+    },
+    {
+      "id": "P10",
+      "group": "Long-term Access",
+      "label": "Grant Renewal Nightmare",
+      "body": "Five years later, grant renewal time. \"We will build on our previous results.\" ...can you reproduce them?"
+    }
+  ],
+  "solutions": [
+    {
+      "id": "S1",
+      "label": "Version Control (Git)",
+      "body": "Track every change to every file. Who changed what, when, and why. Time-travel for your code.",
+      "resources": ["Git", "GitHub", "GitLab"]
+    },
+    {
+      "id": "S2",
+      "label": "Reproducible Environments",
+      "body": "Lock your software stack so it works anywhere, any time. No more \"works on my machine.\"",
+      "resources": ["renv", "conda", "Docker", "Singularity"]
+    },
+    {
+      "id": "S3",
+      "label": "Literate Analysis",
+      "body": "Code + prose + output in one living document. The analysis explains itself as it runs.",
+      "resources": ["R Markdown", "Quarto", "Jupyter"]
+    },
+    {
+      "id": "S4",
+      "label": "Raw Data is Sacred",
+      "body": "Never overwrite raw data. Ever. Scripts transform it; they don't eat it. Treat originals as read-only."
+    },
+    {
+      "id": "S5",
+      "label": "Workflow Managers",
+      "body": "Define your pipeline as code. Automatic re-runs, provenance tracking, HPC-ready.",
+      "resources": ["Nextflow", "Snakemake", "WDL"]
+    },
+    {
+      "id": "S6",
+      "label": "README + Comments (the WHY)",
+      "body": "Don't document what the code does — document why. Future you will weep with gratitude.",
+      "resources": ["Markdown"]
+    },
+    {
+      "id": "S7",
+      "label": "Automated Backups + Cloud",
+      "body": "The 3-2-1 rule: 3 copies, 2 media types, 1 offsite. Automate it. Never think about it again.",
+      "resources": ["rclone", "Backblaze", "S3"]
+    },
+    {
+      "id": "S8",
+      "label": "Archive at Publication",
+      "body": "At submission: tag the release, deposit data + code, get a DOI. Permanent, citable, done.",
+      "resources": ["Zenodo", "OSF", "Figshare"]
+    }
+  ],
+  "benefits": [
+    {
+      "id": "B1",
+      "label": "Your Work is Verifiable",
+      "body": "Anyone can check your numbers. That's not scary — that's the whole point of science."
+    },
+    {
+      "id": "B2",
+      "label": "Science Builds on Solid Foundations",
+      "body": "When your work is reproducible, others can extend it rather than spend months just replicating it."
+    },
+    {
+      "id": "B3",
+      "label": "You Save Time Long-Term",
+      "body": "The upfront investment pays back massively. Future projects, future resubmissions, future you."
+    },
+    {
+      "id": "B4",
+      "label": "Frictionless Collaboration",
+      "body": "Hand off work, onboard students, or partner with remote labs without the usual chaos."
+    },
+    {
+      "id": "B5",
+      "label": "Your Future Self Thanks You",
+      "body": "Six months from now, you will open this project and actually understand what's going on. Miraculous."
+    },
+    {
+      "id": "B6",
+      "label": "Errors Get Caught Early",
+      "body": "Version control and provenance tracking mean bugs surface fast and their blast radius is known."
+    },
+    {
+      "id": "B7",
+      "label": "Your Work Has Lasting Impact",
+      "body": "Papers with accessible data and code get cited more. Reproducible science outlives its authors."
+    }
+  ],
+  "links": {
+    "P1":  { "solutions": ["S1","S2","S5","S6"], "benefits": ["B1","B4","B7"] },
+    "P2":  { "solutions": ["S4","S7"],           "benefits": ["B3","B6"] },
+    "P3":  { "solutions": ["S2"],                "benefits": ["B3","B5"] },
+    "P4":  { "solutions": ["S1","S3","S5"],      "benefits": ["B1","B3","B5"] },
+    "P5":  { "solutions": ["S1","S3","S6"],      "benefits": ["B4","B5"] },
+    "P6":  { "solutions": ["S1","S3","S6"],      "benefits": ["B3","B5"] },
+    "P7":  { "solutions": ["S2","S5"],           "benefits": ["B4"] },
+    "P8":  { "solutions": ["S1","S3","S8"],      "benefits": ["B1","B6"] },
+    "P9":  { "solutions": ["S1","S5"],           "benefits": ["B6"] },
+    "P10": { "solutions": ["S2","S5","S8"],      "benefits": ["B1","B7"] }
+  }
+}
