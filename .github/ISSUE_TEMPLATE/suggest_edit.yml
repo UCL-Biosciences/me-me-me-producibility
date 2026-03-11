@@ -1,0 +1,67 @@
+name: "✏️ Suggest an Edit"
+description: Suggest a change to a card's text, group tag, or links
+title: "[EDIT] "
+labels: ["content suggestion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve this resource! Please fill in as much as you can — you don't need to know the exact wording, just the idea.
+
+  - type: dropdown
+    id: card-type
+    attributes:
+      label: Which column?
+      options:
+        - Problem
+        - Solution
+        - Benefit
+    validations:
+      required: true
+
+  - type: input
+    id: card-id
+    attributes:
+      label: Card ID
+      description: e.g. P1, S3, B7 — shown in the coloured badge on each card
+      placeholder: "P1"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-text
+    attributes:
+      label: Current text (if changing existing text)
+      description: Copy the title or body text you want to change
+      placeholder: "The Postdoc Vanishing Act"
+
+  - type: textarea
+    id: suggested-text
+    attributes:
+      label: Your suggested change
+      description: What should it say instead? Or describe the change you'd like.
+      placeholder: "Suggest new wording or describe the problem with current text"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: change-type
+    attributes:
+      label: Type of change
+      options:
+        - Card title
+        - Card body text
+        - Group/category tag
+        - Links between cards
+        - Add a new card
+        - Remove a card
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Why? (optional)
+      description: Context, evidence, or rationale for the change
+      placeholder: "This framing is more accurate because..."
