@@ -15,7 +15,7 @@ An interactive comic-book-style explainer about reproducibility in computational
 
 ## Suggesting edits
 
-Found a mistake, a missing problem, or better wording? **[Open an issue](../../issues/new/choose)** using the "Suggest an Edit" template. You don't need to know how to code — just describe what should change.
+Found a mistake, a missing problem, or better wording? **[Open an issue](../../issues/new/choose)** using the "Suggest an Edit" template. You don't need to know how to code — just describe what should change. If that doesn't work, just open a normal issue and let us know what you want to see.
 
 ## Editing the content yourself
 
