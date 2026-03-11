@@ -2,7 +2,7 @@
 
 An interactive comic-book-style explainer about reproducibility in computational biology research. Built for PhD students, postdocs, and PIs.
 
-**Live site:** [your-username.github.io/repro-bio](https://your-username.github.io/repro-bio) *(update after deploying)*
+**Live site:** [ucl-biosciences.github.io/me-me-me-producibility](https://ucl-biosciences.github.io/me-me-me-producibility)
 
 ---
 
