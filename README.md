@@ -8,9 +8,9 @@ An interactive comic-book-style explainer about reproducibility in computational
 
 ## What it does
 
-- **10 Problems** you'll recognise if you've spent any time in a bioinformatics lab
-- **8 Solutions** that actually help
-- **7 Benefits** of getting it right
+- **Problems** you'll recognise if you've spent any time managing or analysing big data
+- **Solutions** that actually help
+- **Benefits** of getting it right, both for you AND the wider scientific mission. Win-win!
 - Click any problem to see which solutions address it and what you gain
 
 ## Suggesting edits
@@ -36,25 +36,6 @@ All card text and links live in **`data.json`** — no HTML knowledge required.
 
 To add a new problem: add an entry to `problems`, give it a unique ID (e.g. `P11`), and add its links to the `links` object.
 
-## Running locally
-
-Because the page fetches `data.json`, you need a local server (browsers block `fetch()` from `file://`):
-
-```bash
-# Python 3
-python -m http.server 8000
-# then open http://localhost:8000
-```
-
-Or install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) VS Code extension and click "Go Live".
-
-## Deploying to GitHub Pages
-
-1. Push this repo to GitHub (public)
-2. Go to **Settings → Pages**
-3. Source: **Deploy from a branch** → `main` → `/ (root)`
-4. Save — your site will be live in ~60 seconds at `https://your-username.github.io/repo-name`
-
 ## File structure
 
 ```
@@ -68,5 +49,4 @@ Or install the [Live Server](https://marketplace.visualstudio.com/items?itemName
 ```
 
 ## Built with
-
 Vanilla HTML/CSS/JS. No frameworks, no build step, no dependencies beyond Google Fonts.
